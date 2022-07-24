@@ -4,9 +4,10 @@
 }
 
 .content {
+	position: fixed;
 	overflow: hidden;
 	top: 0;
 	left: 0;
 	transform-origin: top left;
-	transition-property: transform;
+	transition-property: transform, clip;
 }

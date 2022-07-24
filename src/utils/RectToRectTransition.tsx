@@ -24,7 +24,7 @@ export default function RectToRectTransition({
 	return (
 		<div className={ 'container' } style={ toStyle(largeContainer) }>
 			<div className={ 'container' } style={ toStyle(smallContainer) }>
-				<div className={ 'container content' } style={ contentStyle } onClick={ () => toggleContainer() }>
+				<div className={ 'content' } style={ contentStyle } onClick={ () => toggleContainer() }>
 					{ renderContent({}) }
 				</div>
 			</div>
@@ -33,9 +33,23 @@ export default function RectToRectTransition({
 
 	function calculateTransform(container: Container) {
 		const { x, y, width, height, fit } = containers[container]
+
+		const scaleX = width / naturalSize.width,
+			scaleY = height / naturalSize.height,
+			scale = fit === 'cover' ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY)
+
+		const clipX = naturalSize.width - width / scale,
+			clipY = naturalSize.height - height / scale
+
+		const left = clipX / 2,
+			top = clipY / 2,
+			right = naturalSize.width - left,
+			bottom = naturalSize.height - top
+
 		return {
 			...naturalSize,
-			transform: `translate(${ x }px, ${ y }px) scale(${ width / naturalSize.width }, ${ height / naturalSize.height })`,
+			transform: `translate(${ x - left * scale }px, ${ y - top * scale }px) scale(${ scale })`,
+			clip: `rect(${ top }px, ${ right }px, ${ bottom }px, ${ left }px)`,
 			transitionDuration: `${ duration }ms`
 		}
 	}

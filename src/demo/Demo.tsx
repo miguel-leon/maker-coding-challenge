@@ -1,4 +1,5 @@
-import RectToRectTransition from '../utils/RectToRectTransition';
+import RectToRectTransition from '../utils/RectToRectTransition'
+import './Demo.scss'
 
 
 export default function Demo() {
@@ -35,6 +36,6 @@ export default function Demo() {
 
 function render() {
 	return (
-		<h1>hello world</h1>
+		<img src="/countdown.png" alt="image"/>
 	)
 }
